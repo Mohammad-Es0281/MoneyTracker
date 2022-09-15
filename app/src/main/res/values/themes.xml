@@ -1,0 +1,14 @@
+<resources>
+    <style name="Theme.MoneyTracker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/blue_grey_100</item>
+        <item name="colorPrimaryVariant">@color/blue_grey_300</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/blue_grey_500</item>
+        <item name="colorSecondaryVariant">@color/blue_grey_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
+    </style>
+</resources>
