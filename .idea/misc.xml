@@ -3,7 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/drawable/back.xml" value="0.1895" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/drawable/back2.xml" value="0.1895" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/drawable/back3.xml" value="0.1895" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/drawable/background_card.xml" value="0.1355" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/drawable/background_edit_text_rounded.xml" value="0.2275" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/drawable/background_edit_text_rounded_focused.xml" value="0.2275" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/drawable/bottom_back.xml" value="0.2275" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/drawable/ic_arrow_back.xml" value="0.23" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/drawable/ic_round_add.xml" value="0.2275" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/drawable/main_back.xml" value="0.1895" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/layout/fragment_add_transaction.xml" value="0.264" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/layout/item_transaction.xml" value="0.264" />
+        <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/layout/test.xml" value="0.24895833333333334" />
         <entry key="..\:/Courses/Talkademy/MoneyTracker/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.115" />
       </map>
     </option>

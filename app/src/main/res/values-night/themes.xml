@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.MoneyTracker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.MoneyTracker" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_grey_500</item>
         <item name="colorPrimaryVariant">@color/blue_grey_700</item>

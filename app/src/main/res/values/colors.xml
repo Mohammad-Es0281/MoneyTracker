@@ -5,6 +5,13 @@
     <color name="blue_grey_300">#90A4AE</color>
     <color name="blue_grey_500">#607D8B</color>
     <color name="blue_grey_700">#455A64</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_green">#A3F7A1</color>
+    <color name="light_red">#F7A1A1</color>
+    <color name="green">#3FBA3B</color>
+    <color name="red">#BA3B3B</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="background">#99ECEFF1</color>
 </resources>
