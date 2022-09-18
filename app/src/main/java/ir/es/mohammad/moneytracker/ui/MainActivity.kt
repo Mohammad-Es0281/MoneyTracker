@@ -1,8 +1,9 @@
-package ir.es.mohammad.moneytracker
+package ir.es.mohammad.moneytracker.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
+import ir.es.mohammad.moneytracker.R
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
