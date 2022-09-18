@@ -10,7 +10,7 @@ data class Transaction(
     @ColumnInfo(name = "id")
     val id: Long = 0L,
     @ColumnInfo(name = "amount")
-    val amount: Double,
+    val amount: Long,
     @ColumnInfo(name = "transaction_type")
     val transactionType: TransactionType
 ) {

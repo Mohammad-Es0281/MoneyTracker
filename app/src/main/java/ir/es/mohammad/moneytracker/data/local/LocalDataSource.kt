@@ -1,6 +1,7 @@
 package ir.es.mohammad.moneytracker.data.local
 
 import ir.es.mohammad.moneytracker.model.Transaction
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(
@@ -10,7 +11,7 @@ class LocalDataSource @Inject constructor(
         return transactionDao.insertTransaction(transaction)
     }
 
-    override suspend fun getAllTransactions(): List<Transaction> {
+    override suspend fun getAllTransactions(): Flow<List<Transaction>> {
         return transactionDao.getAllTransactions()
     }
 }

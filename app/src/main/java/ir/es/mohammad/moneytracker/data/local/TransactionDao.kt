@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import ir.es.mohammad.moneytracker.model.Transaction
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TransactionDao {
@@ -12,5 +13,5 @@ interface TransactionDao {
     suspend fun insertTransaction(transaction: Transaction)
 
     @Query("SELECT * FROM ${Transaction.TABLE_NAME}")
-    suspend fun getAllTransactions(): List<Transaction>
+    fun getAllTransactions(): Flow<List<Transaction>>
 }
