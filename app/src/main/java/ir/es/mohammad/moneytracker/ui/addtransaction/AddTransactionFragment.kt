@@ -1,5 +1,6 @@
 package ir.es.mohammad.moneytracker.ui.addtransaction
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
@@ -16,7 +17,8 @@ import ir.es.mohammad.moneytracker.model.Transaction
 import ir.es.mohammad.moneytracker.model.TransactionType
 import ir.es.mohammad.moneytracker.util.collectResult
 import ir.es.mohammad.moneytracker.util.launchAndRepeatWithViewLifecycle
-
+import java.text.SimpleDateFormat
+import java.util.*
 
 @AndroidEntryPoint
 class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction) {
@@ -24,6 +26,7 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction) {
     private var _binding: FragmentAddTransactionBinding? = null
     private val binding get() = _binding!!
     private val addTransactionViewModel: AddTransactionViewModel by viewModels()
+    private val calendar: Calendar by lazy { Calendar.getInstance() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,27 +38,58 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction) {
 
     private fun initViews() {
         with(binding) {
-            btnAdd.setOnClickListener { addTransaction() }
-
-            txtInputAmount.addTextChangedListener(afterTextChanged = { afterAmountTextChanged(it) })
-
-            btnBackButton.setOnClickListener { requireActivity().onBackPressed() }
+            btnBack.setOnClickListener { requireActivity().onBackPressed() }
 
             groupBtnTransactionType.check(R.id.btnIncome)
             btnIncome.setBackgroundTint(R.color.light_green)
             groupBtnTransactionType.addOnButtonCheckedListener { _, checkedId, isChecked ->
-                if (checkedId == R.id.btnIncome) {
-                    if (isChecked)
-                        btnIncome.setBackgroundTint(R.color.light_green)
-                    else
-                        btnIncome.setBackgroundTint(R.color.transparent)
-                }
-                else {
-                    if (isChecked)
-                        btnExpense.setBackgroundTint(R.color.light_red)
-                    else
-                        btnExpense.setBackgroundTint(R.color.transparent)
-                }
+                changeBackground(checkedId, isChecked)
+            }
+
+            txtInputAmount.addTextChangedListener(afterTextChanged = { afterAmountTextChanged(it) })
+
+            txtInputDate.setOnClickListener { showDatePickerDialog() }
+
+            btnAdd.setOnClickListener { addTransaction() }
+        }
+    }
+
+    private fun showDatePickerDialog() {
+        val dateChangeListener =
+            DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                calendar.set(year, month, day)
+                setSelectedDate()
+            }
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            dateChangeListener,
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+        datePickerDialog.show()
+        datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE)
+            .setTextColor(R.color.blue_grey_700)
+    }
+
+    private fun setSelectedDate() {
+        val pattern = "yyyy/MM/dd"
+        val sdf = SimpleDateFormat(pattern)
+        binding.txtInputDate.setText(sdf.format(calendar.time))
+    }
+
+    private fun changeBackground(checkedId: Int, isChecked: Boolean) {
+        with(binding) {
+            if (checkedId == R.id.btnIncome) {
+                if (isChecked)
+                    btnIncome.setBackgroundTint(R.color.light_green)
+                else
+                    btnIncome.setBackgroundTint(R.color.transparent)
+            } else {
+                if (isChecked)
+                    btnExpense.setBackgroundTint(R.color.light_red)
+                else
+                    btnExpense.setBackgroundTint(R.color.transparent)
             }
         }
     }
@@ -84,7 +118,7 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction) {
                 if (groupBtnTransactionType.checkedButtonId == R.id.btnIncome) TransactionType.INCOME
                 else TransactionType.EXPENSE
             val amount = txtInputAmount.text.toString().toLong()
-            val transaction = Transaction(amount = amount, transactionType = transactionType)
+            val transaction = Transaction(amount, transactionType, calendar.timeInMillis)
             addTransactionViewModel.addTransaction(transaction)
         }
     }

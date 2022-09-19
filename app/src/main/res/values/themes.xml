@@ -10,5 +10,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
+
+        <item name="colorOnSurface">@color/blue_grey_700</item>
     </style>
 </resources>
