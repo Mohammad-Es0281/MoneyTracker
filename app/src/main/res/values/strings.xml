@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Money Tracker</string>
     <string name="transaction">Transaction</string>
     <string name="new_transaction">New Transaction</string>
@@ -9,4 +9,127 @@
     <string name="toolbar_icon">Toolbar icon</string>
     <string name="no_transaction">There isn\'t any transaction</string>
     <string name="back_button">Back Button</string>
+    <string name="amount_warning">Please enter amount of transaction</string>
+    <string name="unknown_error">Something went wrong</string>
+    <string name="try_again">Try again</string>
+    <string name="date">Date</string>
+    <string name="daily">Daily</string>
+    <string name="monthly">Monthly</string>
+    <string name="yearly">Yearly</string>
+    <string name="all">All</string>
+    <string name="ok" tools:ignore="PrivateResource">OK</string>
+
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="ten">10</string>
+    <string name="eleven">11</string>
+    <string name="twelve">12</string>
+    <string name="thirteen">13</string>
+    <string name="fourteen">14</string>
+    <string name="fifteen">15</string>
+    <string name="sixteen">16</string>
+    <string name="seventeen">17</string>
+    <string name="eighteen">18</string>
+    <string name="nineteen">19</string>
+    <string name="twenty">20</string>
+    <string name="twenty_one">21</string>
+    <string name="twenty_two">22</string>
+    <string name="twenty_three">23</string>
+    <string name="twenty_four">24</string>
+    <string name="twenty_five">25</string>
+    <string name="twenty_six">26</string>
+    <string name="twenty_seven">27_</string>
+    <string name="twenty_eight">28</string>
+    <string name="twenty_nine">29</string>
+    <string name="thirty">30</string>
+    <string name="thirty_one">31</string>
+
+    <string name="twenty_twenty_one">2021</string>
+    <string name="twenty_twenty_two">2022</string>
+    <string name="twenty_twenty_three">2023</string>
+
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
+    <string name="select_a_date">Select a date</string>
+    <string name="month">Month</string>
+    <string name="day">Day</string>
+    <string name="year">Year</string>
+
+    <string-array name="date_type">
+        <item>@string/daily</item>
+        <item>@string/monthly</item>
+        <item>@string/yearly</item>
+    </string-array>
+
+    <string-array name="years">
+        <item>@string/twenty_twenty_one</item>
+        <item>@string/twenty_twenty_two</item>
+        <item>@string/twenty_twenty_three</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>@string/january</item>
+        <item>@string/february</item>
+        <item>@string/march</item>
+        <item>@string/april</item>
+        <item>@string/may</item>
+        <item>@string/june</item>
+        <item>@string/july</item>
+        <item>@string/august</item>
+        <item>@string/september</item>
+        <item>@string/october</item>
+        <item>@string/november</item>
+        <item>@string/december</item>
+    </string-array>
+
+    <string-array name="days">
+        <item>@string/one</item>
+        <item>@string/two</item>
+        <item>@string/three</item>
+        <item>@string/four</item>
+        <item>@string/five</item>
+        <item>@string/six</item>
+        <item>@string/seven</item>
+        <item>@string/eight</item>
+        <item>@string/nine</item>
+        <item>@string/ten</item>
+        <item>@string/eleven</item>
+        <item>@string/twelve</item>
+        <item>@string/thirteen</item>
+        <item>@string/fourteen</item>
+        <item>@string/fifteen</item>
+        <item>@string/sixteen</item>
+        <item>@string/seventeen</item>
+        <item>@string/eighteen</item>
+        <item>@string/nineteen</item>
+        <item>@string/twenty</item>
+        <item>@string/twenty_one</item>
+        <item>@string/twenty_two</item>
+        <item>@string/twenty_three</item>
+        <item>@string/twenty_four</item>
+        <item>@string/twenty_five</item>
+        <item>@string/twenty_six</item>
+        <item>@string/twenty_seven</item>
+        <item>@string/twenty_eight</item>
+        <item>@string/twenty_nine</item>
+        <item>@string/thirty</item>
+        <item>@string/thirty_one</item>
+    </string-array>
 </resources>
