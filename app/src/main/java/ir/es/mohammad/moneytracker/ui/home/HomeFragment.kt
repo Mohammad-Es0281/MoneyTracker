@@ -2,21 +2,21 @@ package ir.es.mohammad.moneytracker.ui.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ir.es.mohammad.moneytracker.R
 import ir.es.mohammad.moneytracker.databinding.FragmentHomeBinding
-import ir.es.mohammad.moneytracker.util.collectResult
-import ir.es.mohammad.moneytracker.util.gone
-import ir.es.mohammad.moneytracker.util.launchAndRepeatWithViewLifecycle
-import ir.es.mohammad.moneytracker.util.visible
+import ir.es.mohammad.moneytracker.model.Transaction
+import ir.es.mohammad.moneytracker.ui.*
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.OnDateSelectListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -29,7 +29,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         _binding = FragmentHomeBinding.bind(view)
 
         if (savedInstanceState == null)
-            homeViewModel.getTransacrions()
+            homeViewModel.getTransactionsByDate()
 
         initViews()
         observe()
@@ -41,10 +41,27 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             recyclerViewTransactions.apply {
                 adapter = transactionAdapter
                 layoutManager = object : LinearLayoutManager(requireContext()) {
-                    override fun canScrollVertically(): Boolean {
-                        return false
-                    }
+                    override fun canScrollVertically(): Boolean = false
                 }
+            }
+
+            spinnerDateType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    homeViewModel.dateType = position
+                    homeViewModel.getTransactionsByDate()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+            }
+
+            btnDateSelection.setOnClickListener {
+                showDateSelectionDialog()
+                btnDateSelection.isClickable = false
             }
 
             btnAddTransaction.setOnClickListener {
@@ -54,26 +71,50 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
+    private fun showDateSelectionDialog() {
+        DateSelectionDialog().apply {
+            val (year, month, day) = homeViewModel.getYearMonthDay()
+            arguments = bundleOf(
+                DateSelectionDialog.DAY_ARG to day,
+                DateSelectionDialog.MONTH_ARG to month,
+                DateSelectionDialog.YEAR_ARG to year - 2021,
+                DateSelectionDialog.DATE_TYPE_ARG to homeViewModel.dateType
+            )
+        }.show(childFragmentManager, null)
+    }
+
     private fun observe() {
         launchAndRepeatWithViewLifecycle {
-            homeViewModel.transactionFlow.collectResult(
-                onLoading = {},
-                onSuccess = { transactions ->
-                    if (transactions.isNotEmpty()) {
-                        transactionAdapter.submitList(transactions)
-                        binding.txtNoTransaction.gone()
+            launch {
+                homeViewModel.transactionFlow.collectResult(
+                    onLoading = {},
+                    onSuccess = { transactions -> onTransactionsReceived(transactions) },
+                    onError = { errorMsg ->
+                        showError(requireView(), errorMsg) { homeViewModel.getTransactionsByDate() }
                     }
-                    else
-                        binding.txtNoTransaction.visible()
-                },
-                onError = { errorMessage ->
-                    val message = errorMessage ?: getString(R.string.unknown_error)
-                    val actionMessage = getString(R.string.try_again)
-                    Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG)
-                        .setAction(actionMessage) { homeViewModel.getTransacrions() }.show()
-                }
-            )
+                )
+            }
+
+            launch {
+                homeViewModel.formattedDate.collect { date -> binding.btnDateSelection.text = date }
+            }
         }
+    }
+
+    private fun onTransactionsReceived(transactions: List<Transaction>) {
+        if (transactions.isNotEmpty())
+            binding.txtNoTransaction.gone()
+        else
+            binding.txtNoTransaction.visible()
+        transactionAdapter.submitList(transactions)
+    }
+
+    override fun onDateSelected(year: Int, month: Int, day: Int) {
+        homeViewModel.setCalendar(year, month, day)
+
+        homeViewModel.getTransactionsByDate()
+
+        binding.btnDateSelection.isClickable = true
     }
 
     override fun onDestroyView() {

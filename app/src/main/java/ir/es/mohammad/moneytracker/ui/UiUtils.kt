@@ -1,21 +1,20 @@
-package ir.es.mohammad.moneytracker.util
+package ir.es.mohammad.moneytracker.ui
 
-import android.graphics.drawable.Drawable
 import android.view.View
-import androidx.annotation.ColorRes
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.snackbar.Snackbar
 import ir.es.mohammad.moneytracker.R
+import ir.es.mohammad.moneytracker.util.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 inline fun Fragment.launchAndRepeatWithViewLifecycle(
     minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
-    crossinline block: suspend CoroutineScope.() -> Unit
+    crossinline block: suspend CoroutineScope.() -> Unit,
 ) {
     viewLifecycleOwner.lifecycleScope.launch {
         viewLifecycleOwner.lifecycle.repeatOnLifecycle(minActiveState) {
@@ -27,7 +26,7 @@ inline fun Fragment.launchAndRepeatWithViewLifecycle(
 suspend inline fun <T> Flow<Result<T>>.collectResult(
     crossinline onLoading: suspend ((data: T?) -> Unit),
     crossinline onSuccess: suspend ((data: T) -> Unit),
-    crossinline onError: suspend (message: String?) -> Unit
+    crossinline onError: suspend (message: String?) -> Unit,
 ) {
     collect { result ->
         when (result) {
@@ -38,13 +37,22 @@ suspend inline fun <T> Flow<Result<T>>.collectResult(
     }
 }
 
-fun View.visible() { visibility = View.VISIBLE }
-fun View.invisible() { visibility = View.INVISIBLE }
-fun View.gone() { visibility = View.GONE }
+fun View.visible() {
+    visibility = View.VISIBLE
+}
 
-fun View.setBackgroundTint(@ColorRes color: Int) {
-    var buttonDrawable: Drawable = this.background
-    buttonDrawable = DrawableCompat.wrap(buttonDrawable)
-    DrawableCompat.setTint(buttonDrawable, color)
-    this.background = buttonDrawable
+fun View.invisible() {
+    visibility = View.INVISIBLE
+}
+
+fun View.gone() {
+    visibility = View.GONE
+}
+
+
+fun showError(view: View, errorMessage: String?, action: View.OnClickListener) {
+    val context = view.context
+    val message = errorMessage ?: context.getString(R.string.unknown_error)
+    val actionMessage = context.getString(R.string.try_again)
+    Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction(actionMessage, action).show()
 }
