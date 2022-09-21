@@ -1,4 +1,4 @@
-package ir.es.mohammad.moneytracker.data.local
+package ir.es.mohammad.moneytracker.data.local.di
 
 import android.content.Context
 import androidx.room.Room
@@ -7,6 +7,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import ir.es.mohammad.moneytracker.data.local.AppDataBase
+import ir.es.mohammad.moneytracker.data.local.ILocalDataSource
+import ir.es.mohammad.moneytracker.data.local.LocalDataSource
+import ir.es.mohammad.moneytracker.data.local.TransactionDao
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)

@@ -14,4 +14,7 @@ interface TransactionDao {
 
     @Query("SELECT * FROM ${Transaction.TABLE_NAME}")
     fun getAllTransactions(): Flow<List<Transaction>>
+
+    @Query("SELECT * FROM ${Transaction.TABLE_NAME} WHERE date >= :startDate AND date < :endDate")
+    fun getTransactionsByDate(startDate: Long, endDate: Long): Flow<List<Transaction>>
 }

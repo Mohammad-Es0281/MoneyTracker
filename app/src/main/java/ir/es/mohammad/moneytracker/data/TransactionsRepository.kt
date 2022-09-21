@@ -1,6 +1,8 @@
 package ir.es.mohammad.moneytracker.data
 
 import ir.es.mohammad.moneytracker.data.local.ILocalDataSource
+import ir.es.mohammad.moneytracker.data.util.callDatabase
+import ir.es.mohammad.moneytracker.data.util.callDatabaseFlow
 import ir.es.mohammad.moneytracker.model.Transaction
 import ir.es.mohammad.moneytracker.util.Result
 import kotlinx.coroutines.flow.Flow
@@ -18,15 +20,7 @@ class TransactionsRepository @Inject constructor(private val localDataSource: IL
         return callDatabaseFlow { localDataSource.getAllTransactions() }
     }
 
-    private suspend fun <T : Any> callDatabase(block: suspend () -> T): Flow<Result<T>> {
-        return flow<Result<T>> { emit(Result.Success(block())) }
-            .onStart { emit(Result.Loading()) }
-            .catch { cause -> emit(Result.Error(cause)) }
-    }
-
-    private suspend fun <T : Any> callDatabaseFlow(block: suspend () -> Flow<T>): Flow<Result<T>> {
-        return flow<Result<T>> { block().collect { value -> emit(Result.Success(value)) } }
-            .onStart { emit(Result.Loading()) }
-            .catch { cause -> emit(Result.Error(cause)) }
+    suspend fun getTransactionsByDate(startDate: Long, endDate: Long): Flow<Result<List<Transaction>>> {
+        return callDatabaseFlow { localDataSource.getTransactionsByDate(startDate, endDate) }
     }
 }

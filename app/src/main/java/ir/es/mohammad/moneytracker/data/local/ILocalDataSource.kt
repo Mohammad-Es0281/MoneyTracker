@@ -7,4 +7,6 @@ interface ILocalDataSource {
     suspend fun insertTransaction(transaction: Transaction)
 
     suspend fun getAllTransactions(): Flow<List<Transaction>>
+
+    suspend fun getTransactionsByDate(startDate: Long, endDate: Long): Flow<List<Transaction>>
 }
