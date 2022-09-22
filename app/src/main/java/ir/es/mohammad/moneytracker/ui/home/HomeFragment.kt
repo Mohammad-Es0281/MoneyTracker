@@ -77,7 +77,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.OnDat
             arguments = bundleOf(
                 DateSelectionDialog.DAY_ARG to day,
                 DateSelectionDialog.MONTH_ARG to month,
-                DateSelectionDialog.YEAR_ARG to year - 2021,
+                DateSelectionDialog.YEAR_ARG to (year - 2021),
                 DateSelectionDialog.DATE_TYPE_ARG to homeViewModel.dateType
             )
         }.show(childFragmentManager, null)
@@ -109,17 +109,20 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.OnDat
         transactionAdapter.submitList(transactions)
     }
 
-    override fun onDateSelected(year: Int, month: Int, day: Int) {
-        homeViewModel.setCalendar(year, month, day)
-
-        homeViewModel.getTransactionsByDate()
-
-        binding.btnDateSelection.isClickable = true
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
         _transactionAdapter = null
+    }
+
+    override fun onDateSelected(year: Int, month: Int, day: Int) {
+        homeViewModel.setCalendar(year, month, day)
+
+        homeViewModel.getTransactionsByDate()
+    }
+
+    override fun onDestroyDialog() {
+        super.onDestroyDialog()
+        binding.btnDateSelection.isClickable = true
     }
 }

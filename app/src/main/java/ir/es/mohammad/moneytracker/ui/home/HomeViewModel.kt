@@ -3,7 +3,7 @@ package ir.es.mohammad.moneytracker.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ir.es.mohammad.moneytracker.data.TransactionsRepository
+import ir.es.mohammad.moneytracker.data.Repository
 import ir.es.mohammad.moneytracker.model.Transaction
 import ir.es.mohammad.moneytracker.util.Result
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,10 +15,14 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val transactionsRepository: TransactionsRepository) :
+class HomeViewModel @Inject constructor(private val repository: Repository) :
     ViewModel() {
 
-    private var calendar: Calendar = Calendar.getInstance()
+    private var calendar: Calendar = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+    }
         set(value) {
             field = value
             setFormattedDate()
@@ -38,7 +42,8 @@ class HomeViewModel @Inject constructor(private val transactionsRepository: Tran
     val formattedDate = _formattedDate.asStateFlow()
 
     fun setCalendar(year: Int, month: Int, day: Int) {
-        calendar = Calendar.getInstance().apply { set(year, month, day) }
+        calendar.set(year, month, day)
+        setFormattedDate()
     }
 
     fun getYearMonthDay() =
@@ -50,7 +55,7 @@ class HomeViewModel @Inject constructor(private val transactionsRepository: Tran
     fun getTransactionsByDate() {
         viewModelScope.launch {
             val (startDate, endDate) = getStartAndEndDate()
-            transactionsRepository.getTransactionsByDate(startDate, endDate).collect {
+            repository.getTransactionsByDate(startDate, endDate).collect {
                 _transactionFlow.emit(it)
             }
         }
@@ -58,8 +63,10 @@ class HomeViewModel @Inject constructor(private val transactionsRepository: Tran
 
     private fun getStartAndEndDate(): Pair<Long, Long> {
         val newCalendar = calendar.clone() as Calendar
-        if (dateType == 1) newCalendar.set(Calendar.DAY_OF_MONTH, 1)
-        if (dateType == 2) newCalendar.set(Calendar.MONTH, 1)
+        if (dateType >= 1) {
+            newCalendar.set(Calendar.DAY_OF_MONTH, 1)
+            if (dateType == 2) newCalendar.set(Calendar.MONTH, 0)
+        }
         val startDate = newCalendar.timeInMillis
 
         val fieldToIncrease = when (dateType) {
@@ -69,8 +76,8 @@ class HomeViewModel @Inject constructor(private val transactionsRepository: Tran
             else -> throw Exception()
         }
         newCalendar.add(fieldToIncrease, 1)
-        val endDateExclusive = newCalendar.timeInMillis
-        return Pair(startDate, endDateExclusive)
+        val endDate = newCalendar.timeInMillis
+        return Pair(startDate, endDate)
     }
 
     private fun getFormattedDate(): String {
