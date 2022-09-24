@@ -73,11 +73,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.OnDat
 
     private fun showDateSelectionDialog() {
         DateSelectionDialog().apply {
+            val years = this@HomeFragment.resources.getStringArray(R.array.years)
             val (year, month, day) = homeViewModel.getYearMonthDay()
             arguments = bundleOf(
                 DateSelectionDialog.DAY_ARG to day,
                 DateSelectionDialog.MONTH_ARG to month,
-                DateSelectionDialog.YEAR_ARG to (year - 2021),
+                DateSelectionDialog.YEAR_ARG to (year - years.first().toInt()),
                 DateSelectionDialog.DATE_TYPE_ARG to homeViewModel.dateType
             )
         }.show(childFragmentManager, null)
@@ -123,6 +124,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.OnDat
 
     override fun onDestroyDialog() {
         super.onDestroyDialog()
-        binding.btnDateSelection.isClickable = true
+        _binding?.btnDateSelection?.isClickable = true
     }
 }

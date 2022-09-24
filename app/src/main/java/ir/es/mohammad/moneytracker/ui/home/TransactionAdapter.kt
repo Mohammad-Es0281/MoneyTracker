@@ -10,6 +10,8 @@ import ir.es.mohammad.moneytracker.R
 import ir.es.mohammad.moneytracker.databinding.ItemTransactionBinding
 import ir.es.mohammad.moneytracker.model.Transaction
 import ir.es.mohammad.moneytracker.model.TransactionType
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TransactionAdapter(
     private val onTransactionSelected: (transaction: Transaction) -> Unit = {}
@@ -26,6 +28,10 @@ class TransactionAdapter(
                 val textColor = if (isIncome) R.color.green else R.color.red
                 txtAmount.text = prefix + transaction.amount.toString()
                 txtAmount.setTextColor(ContextCompat.getColor(itemViewBinding.root.context, textColor))
+                val pattern = "yyyy/MM/dd"
+                val sdf = SimpleDateFormat(pattern)
+                txtDate.text = sdf.format(Date(transaction.date))
+                txtCategory.text = transaction.category.name
             }
         }
     }
