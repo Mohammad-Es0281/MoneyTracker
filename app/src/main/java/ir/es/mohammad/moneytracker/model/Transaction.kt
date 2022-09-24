@@ -1,6 +1,7 @@
 package ir.es.mohammad.moneytracker.model
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -12,8 +13,10 @@ data class Transaction(
     val transactionType: TransactionType,
     @ColumnInfo(name = "date")
     val date: Long,
+    @Embedded
+    val category: Category,
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "transaction_id")
     val id: Long = 0L,
 ) {
     companion object {
