@@ -19,6 +19,24 @@
     <string name="all">All</string>
     <string name="ok" tools:ignore="PrivateResource">OK</string>
 
+    <string name="salary">Salary</string>
+    <string name="car">Car</string>
+    <string name="home">Home</string>
+    <string name="clothes">Clothes</string>
+    <string name="food">Food</string>
+    <string name="drink">Drink</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="transport">Transport</string>
+    <string name="shopping">Shopping</string>
+    <string name="phone">Phone</string>
+    <string name="medical">Medical</string>
+    <string name="grocery">Grocery</string>
+    <string name="gift">Gift</string>
+    <string name="sports">Sports</string>
+    <string name="award">Award</string>
+    <string name="other">Other</string>
+    <string name="add_category_spinner">➕  Add Category</string>
+
     <string name="one">1</string>
     <string name="two">2</string>
     <string name="three">3</string>
@@ -45,13 +63,24 @@
     <string name="twenty_four">24</string>
     <string name="twenty_five">25</string>
     <string name="twenty_six">26</string>
-    <string name="twenty_seven">27_</string>
+    <string name="twenty_seven">27</string>
     <string name="twenty_eight">28</string>
     <string name="twenty_nine">29</string>
     <string name="thirty">30</string>
     <string name="thirty_one">31</string>
 
-    <string name="twenty_twenty_one">2021</string>
+    <string name="twenty_ten">2010</string>
+    <string name="twenty_eleven">2011</string>
+    <string name="twenty_twelve">2012</string>
+    <string name="twenty_thirteen">2013</string>
+    <string name="twenty_fourteen">2014</string>
+    <string name="twenty_fifteen">2015</string>
+    <string name="twenty_sixteen">2016</string>
+    <string name="twenty_seventeen">2017</string>
+    <string name="twenty_eighteen">2018</string>
+    <string name="twenty_nineteen">2019</string>
+    <string name="twenty_twenty">2020</string>
+    <string name="twenty_twenty_one">2020</string>
     <string name="twenty_twenty_two">2022</string>
     <string name="twenty_twenty_three">2023</string>
 
@@ -71,6 +100,8 @@
     <string name="month">Month</string>
     <string name="day">Day</string>
     <string name="year">Year</string>
+    <string name="category">Category</string>
+    <string name="add_a_category">Add a category</string>
 
     <string-array name="date_type">
         <item>@string/daily</item>
@@ -79,6 +110,17 @@
     </string-array>
 
     <string-array name="years">
+        <item>@string/twenty_ten</item>
+        <item>@string/twenty_eleven</item>
+        <item>@string/twenty_twelve</item>
+        <item>@string/twenty_fourteen</item>
+        <item>@string/twenty_fifteen</item>
+        <item>@string/twenty_sixteen</item>
+        <item>@string/twenty_seventeen</item>
+        <item>@string/twenty_seventeen</item>
+        <item>@string/twenty_eighteen</item>
+        <item>@string/twenty_nineteen</item>
+        <item>@string/twenty_twenty</item>
         <item>@string/twenty_twenty_one</item>
         <item>@string/twenty_twenty_two</item>
         <item>@string/twenty_twenty_three</item>
