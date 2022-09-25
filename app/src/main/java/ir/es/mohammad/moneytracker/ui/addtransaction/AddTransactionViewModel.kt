@@ -9,6 +9,7 @@ import ir.es.mohammad.moneytracker.model.Transaction
 import ir.es.mohammad.moneytracker.util.Result
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,9 +28,25 @@ class AddTransactionViewModel @Inject constructor(private val repository: Reposi
         MutableStateFlow(Result.Loading())
     val categoriesFlow = _categoriesFlow.asStateFlow()
 
+    private val _transactionFlow: MutableStateFlow<Result<Transaction>> =
+        MutableStateFlow(Result.Loading())
+    val transactionFlow = _transactionFlow.asStateFlow()
+
     fun addTransaction(transaction: Transaction) {
         viewModelScope.launch {
-            repository.addTransaction(transaction).collect { _addTransactionFlow.emit(it) }
+            _addTransactionFlow.emit(repository.addTransaction(transaction).first { it.isSuccess })
+        }
+    }
+
+    fun editTransaction(transaction: Transaction) {
+        viewModelScope.launch {
+            _addTransactionFlow.emit(repository.editTransaction(transaction).first { it.isSuccess })
+        }
+    }
+
+    fun getTransaction(id: Long) {
+        viewModelScope.launch {
+            _transactionFlow.emit(repository.getTransaction(id).first { it.isSuccess })
         }
     }
 

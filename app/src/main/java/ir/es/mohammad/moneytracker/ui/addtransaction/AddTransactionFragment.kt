@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import ir.es.mohammad.moneytracker.R
 import ir.es.mohammad.moneytracker.databinding.FragmentAddTransactionBinding
@@ -36,6 +37,7 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
     private val categorySpinnerAdapter get() = _categorySpinnerAdapter!!
     private val addTransactionViewModel: AddTransactionViewModel by viewModels()
     private val calendar: Calendar by lazy { Calendar.getInstance() }
+    private val args: AddTransactionFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,7 +47,30 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
             addTransactionViewModel.getCategories()
 
         initViews()
+        if (args.transactionId != -1L)
+            setupTransaction()
         observe()
+    }
+
+    private fun setupTransaction() {
+        addTransactionViewModel.getTransaction(args.transactionId)
+        launchAndRepeatWithViewLifecycle {
+            addTransactionViewModel.transactionFlow.collectResult(
+                onLoading = {},
+                onSuccess = { transaction ->
+                    with(binding) {
+                        txtTitle.text = resources.getText(R.string.edit_transaction)
+                        txtInputAmount.setText(transaction.amount.toString())
+                        val date = SimpleDateFormat("yyyy/MM/dd").format(transaction.date)
+                        txtInputDate.setText(date)
+                        spinnerCategory.setSelection(transaction.category.id)
+                        txtInputNote.setText(transaction.note)
+                        calendar.timeInMillis = transaction.date
+                    }
+                },
+                onError = {}
+            )
+        }
     }
 
     private fun initViews() {
@@ -63,7 +88,11 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
             setSelectedDate()
             txtInputDate.setOnClickListener { showDatePickerDialog() }
 
-            btnAdd.setOnClickListener { addTransaction() }
+            btnAdd.setOnClickListener {
+                val transaction = makeTransaction()
+                if (args.transactionId == -1L) addTransactionViewModel.addTransaction(transaction)
+                else addTransactionViewModel.editTransaction(transaction)
+            }
 
             spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -155,15 +184,16 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
         }
     }
 
-    private fun addTransaction() {
+    private fun makeTransaction(): Transaction {
         with(binding) {
             val transactionType =
                 if (groupBtnTransactionType.checkedButtonId == R.id.btnIncome) TransactionType.INCOME
                 else TransactionType.EXPENSE
             val amount = txtInputAmount.text.toString().toLong()
             val category = Category(spinnerCategory.selectedItem.toString())
-            val transaction = Transaction(amount, transactionType, calendar.timeInMillis, category)
-            addTransactionViewModel.addTransaction(transaction)
+            val note = txtInputNote.text.toString()
+            val id = args.transactionId.takeIf { it != -1L } ?: 0
+            return Transaction(amount, transactionType, calendar.timeInMillis, category, note, id)
         }
     }
 
@@ -174,7 +204,7 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
                     onLoading = {},
                     onSuccess = { requireActivity().onBackPressed() },
                     onError = { errorMessage ->
-                        showError(requireView(), errorMessage) { addTransaction() }
+                        showError(requireView(), errorMessage) { makeTransaction() }
                     }
                 )
             }
@@ -193,7 +223,7 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
             launch {
                 addTransactionViewModel.addCategoryFlow.collectResult(
                     onLoading = {},
-                    onSuccess = {},
+                    onSuccess = { addTransactionViewModel.getCategories() },
                     onError = { errorMessage ->
                         showError(requireView(), errorMessage) { showAddCategoryDialog() }
                     }
@@ -203,7 +233,7 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
     }
 
     private fun setCategorySpinnerItems(categories: List<String>) {
-        _categorySpinnerAdapter = ArrayAdapter<String>(
+        _categorySpinnerAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
             categories)

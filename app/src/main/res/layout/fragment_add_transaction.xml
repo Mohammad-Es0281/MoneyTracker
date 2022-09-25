@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txtNewTransaction"
+        android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_very_small"
@@ -146,6 +146,36 @@
                     tools:targetApi="m" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutNote"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_very_large"
+                android:hint="@string/note"
+                app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
+                app:boxCornerRadiusBottomStart="@dimen/corner_radius"
+                app:boxCornerRadiusTopEnd="@dimen/corner_radius"
+                app:boxCornerRadiusTopStart="@dimen/corner_radius"
+                app:hintTextColor="@color/blue_grey_500"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerCategory">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtInputNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/blue_grey_50"
+                    android:backgroundTintMode="add"
+                    android:drawableEnd="@drawable/ic_note"
+                    android:drawablePadding="@dimen/margin_very_small"
+                    android:drawableTint="@color/blue_grey_700"
+                    android:maxLength="150"
+                    tools:targetApi="m" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Spinner
                 android:id="@+id/spinnerCategory"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
@@ -169,7 +199,7 @@
         android:layout_marginBottom="@dimen/margin_very_large"
         android:backgroundTint="@color/blue_grey_50"
         android:enabled="false"
-        android:text="@string/add"
+        android:text="@string/save"
         android:textColor="@color/blue_grey_100"
         android:textSize="@dimen/text_size_h3"
         app:iconPadding="@dimen/margin_small"

@@ -37,7 +37,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.OnDat
 
     private fun initViews() {
         with(binding) {
-            _transactionAdapter = TransactionAdapter()
+            _transactionAdapter =
+                TransactionAdapter() { transaction -> navigateToTransaction(transaction.id) }
             recyclerViewTransactions.apply {
                 adapter = transactionAdapter
                 layoutManager = object : LinearLayoutManager(requireContext()) {
@@ -64,11 +65,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.OnDat
                 btnDateSelection.isClickable = false
             }
 
-            btnAddTransaction.setOnClickListener {
-                findNavController()
-                    .navigate(HomeFragmentDirections.actionHomeFragmentToAddTransactionFragment())
-            }
+            btnAddTransaction.setOnClickListener { navigateToTransaction() }
         }
+    }
+
+    private fun navigateToTransaction(transactionId: Long = -1) {
+        findNavController()
+            .navigate(HomeFragmentDirections.actionHomeFragmentToAddTransactionFragment(transactionId))
     }
 
     private fun showDateSelectionDialog() {

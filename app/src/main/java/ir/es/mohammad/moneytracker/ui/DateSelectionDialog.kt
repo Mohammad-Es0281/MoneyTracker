@@ -3,13 +3,10 @@ package ir.es.mohammad.moneytracker.ui
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ir.es.mohammad.moneytracker.databinding.DialogSelectDateBinding
-import java.util.*
-
 
 class DateSelectionDialog : DialogFragment() {
 

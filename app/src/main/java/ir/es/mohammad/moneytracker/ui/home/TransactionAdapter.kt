@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class TransactionAdapter(
-    private val onTransactionSelected: (transaction: Transaction) -> Unit = {}
+    private val onTransactionSelected: (transaction: Transaction) -> Unit
 ) : ListAdapter<Transaction, TransactionAdapter.CustomViewHolder>(UserDiffCallBack()) {
 
     inner class CustomViewHolder(private val itemViewBinding: ItemTransactionBinding) :

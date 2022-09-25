@@ -21,5 +21,10 @@
         android:id="@+id/addTransactionFragment"
         android:name="ir.es.mohammad.moneytracker.ui.addtransaction.AddTransactionFragment"
         android:label="fragment_add_transaction"
-        tools:layout="@layout/fragment_add_transaction" />
+        tools:layout="@layout/fragment_add_transaction" >
+        <argument
+            android:name="transactionId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
 </navigation>
