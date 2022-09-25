@@ -15,6 +15,8 @@ data class Transaction(
     val date: Long,
     @Embedded
     val category: Category,
+    @ColumnInfo(name = "note")
+    val note: String,
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "transaction_id")
     val id: Long = 0L,

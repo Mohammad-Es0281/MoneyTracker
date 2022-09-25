@@ -16,5 +16,5 @@ interface CategoryDao {
     suspend fun insertAll(category: List<Category>)
 
     @Query("SELECT * FROM ${Category.TABLE_NAME}")
-    fun getAllCategories(): Flow<List<Category>>
+    suspend fun getAllCategories(): List<Category>
 }

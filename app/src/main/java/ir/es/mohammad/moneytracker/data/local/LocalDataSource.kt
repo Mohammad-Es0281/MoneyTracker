@@ -16,7 +16,6 @@ class LocalDataSource @Inject constructor(
     override suspend fun getAllTransactions(): Flow<List<Transaction>> {
         return transactionDao.getAllTransactions()
     }
-
     override suspend fun getTransactionsByDate(
         startDate: Long,
         endDate: Long,
@@ -24,7 +23,15 @@ class LocalDataSource @Inject constructor(
         return transactionDao.getTransactionsByDate(startDate, endDate)
     }
 
-    override suspend fun getAllCategories(): Flow<List<Category>> {
+    override suspend fun getTransaction(id: Long): Transaction {
+        return transactionDao.getTransaction(id)
+    }
+
+    override suspend fun editTransaction(transaction: Transaction) {
+        return transactionDao.updateTransaction(transaction)
+    }
+
+    override suspend fun getAllCategories(): List<Category> {
         return categoryDao.getAllCategories()
     }
 

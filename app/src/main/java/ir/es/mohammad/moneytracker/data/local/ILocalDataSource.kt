@@ -11,7 +11,11 @@ interface ILocalDataSource {
 
     suspend fun getTransactionsByDate(startDate: Long, endDate: Long): Flow<List<Transaction>>
 
-    suspend fun getAllCategories(): Flow<List<Category>>
+    suspend fun getTransaction(id: Long): Transaction
+
+    suspend fun editTransaction(transaction: Transaction)
+
+    suspend fun getAllCategories(): List<Category>
 
     suspend fun insertCategory(category: Category)
 }
