@@ -55,12 +55,37 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
 
             btnAddTransaction.setOnClickListener { navigateToTransaction() }
 
+            groupBtnTransactionType.check(R.id.btnAll)
+            btnAll.setBackgroundTint(requireContext().applicationContext, R.color.blue_grey_100)
+            groupBtnTransactionType.addOnButtonCheckedListener { _, checkedId, isChecked ->
+                changeTransactionTypeBackground(checkedId, isChecked)
+            }
             btnAll.setOnClickListener { viewModel.shownTransactionsType = null }
             btnIncome.setOnClickListener {
                 viewModel.shownTransactionsType = TransactionType.INCOME
             }
             btnExpense.setOnClickListener {
                 viewModel.shownTransactionsType = TransactionType.EXPENSE
+            }
+        }
+    }
+
+    private fun changeTransactionTypeBackground(checkedId: Int, isChecked: Boolean) {
+        with(binding) {
+            val appContext = requireActivity().applicationContext
+            when (checkedId) {
+                R.id.btnIncome -> {
+                    val color = if (isChecked) R.color.light_green else R.color.transparent
+                    btnIncome.setBackgroundTint(appContext, color)
+                }
+                R.id.btnAll -> {
+                    val color = if (isChecked) R.color.blue_grey_100 else R.color.transparent
+                    btnAll.setBackgroundTint(appContext, color)
+                }
+                R.id.btnExpense -> {
+                    val color = if (isChecked) R.color.light_red else R.color.transparent
+                    btnExpense.setBackgroundTint(appContext, color)
+                }
             }
         }
     }

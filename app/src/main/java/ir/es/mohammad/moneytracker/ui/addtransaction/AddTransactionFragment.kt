@@ -115,16 +115,15 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
     private fun changeTransactionTypeBackground(checkedId: Int, isChecked: Boolean) {
         with(binding) {
             val appContext = requireActivity().applicationContext
-            if (checkedId == R.id.btnIncome) {
-                if (isChecked)
-                    btnIncome.setBackgroundTint(appContext, R.color.light_green)
-                else
-                    btnIncome.setBackgroundTint(appContext, R.color.transparent)
-            } else {
-                if (isChecked)
-                    btnExpense.setBackgroundTint(appContext, R.color.light_red)
-                else
-                    btnExpense.setBackgroundTint(appContext, R.color.transparent)
+            when (checkedId) {
+                R.id.btnIncome -> {
+                    val color = if (isChecked) R.color.light_green else R.color.transparent
+                    btnIncome.setBackgroundTint(appContext, color)
+                }
+                R.id.btnExpense -> {
+                    val color = if (isChecked) R.color.light_red else R.color.transparent
+                    btnExpense.setBackgroundTint(appContext, color)
+                }
             }
         }
     }
