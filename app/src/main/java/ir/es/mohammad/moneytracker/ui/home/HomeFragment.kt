@@ -7,6 +7,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,15 +22,13 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateSelectionListener {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentHomeBinding::bind)
     private var _transactionAdapter: TransactionAdapter? = null
     private val transactionAdapter get() = _transactionAdapter!!
     private val viewModel: HomeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentHomeBinding.bind(view)
 
         initViews()
         observe()
@@ -151,7 +150,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
         _transactionAdapter = null
     }
 
@@ -161,6 +159,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
 
     override fun onDestroyDialog() {
         super.onDestroyDialog()
-        _binding?.btnDateSelection?.isClickable = true
+        if (this.lifecycle.currentState == Lifecycle.State.RESUMED)
+            binding.btnDateSelection.isClickable = true
     }
 }

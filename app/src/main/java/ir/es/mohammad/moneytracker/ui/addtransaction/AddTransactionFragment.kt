@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import ir.es.mohammad.moneytracker.R
 import ir.es.mohammad.moneytracker.databinding.FragmentAddTransactionBinding
+import ir.es.mohammad.moneytracker.databinding.FragmentHomeBinding
 import ir.es.mohammad.moneytracker.model.Category
 import ir.es.mohammad.moneytracker.model.Transaction
 import ir.es.mohammad.moneytracker.model.TransactionType
@@ -26,8 +27,7 @@ import java.util.*
 class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
     AddCategoryDialog.OnCategoryAddedListener {
 
-    private var _binding: FragmentAddTransactionBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentAddTransactionBinding::bind)
     private var _categorySpinnerAdapter: ArrayAdapter<String>? = null
     private val categorySpinnerAdapter get() = _categorySpinnerAdapter!!
     private val viewModel: AddTransactionViewModel by viewModels()
@@ -36,7 +36,6 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentAddTransactionBinding.bind(view)
 
         initViews()
         if (args.transactionId != -1L)
@@ -234,7 +233,6 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
         _categorySpinnerAdapter = null
     }
 
