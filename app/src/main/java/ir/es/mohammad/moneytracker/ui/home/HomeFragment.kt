@@ -12,24 +12,22 @@ import dagger.hilt.android.AndroidEntryPoint
 import ir.es.mohammad.moneytracker.R
 import ir.es.mohammad.moneytracker.databinding.FragmentHomeBinding
 import ir.es.mohammad.moneytracker.model.Transaction
+import ir.es.mohammad.moneytracker.model.TransactionType
 import ir.es.mohammad.moneytracker.ui.*
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.OnDateSelectListener {
+class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateSelectionListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private var _transactionAdapter: TransactionAdapter? = null
     private val transactionAdapter get() = _transactionAdapter!!
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
-
-        if (savedInstanceState == null)
-            homeViewModel.getTransactionsByDate()
 
         initViews()
         observe()
@@ -53,8 +51,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.OnDat
                     position: Int,
                     id: Long,
                 ) {
-                    homeViewModel.dateType = position
-                    homeViewModel.getTransactionsByDate()
+                    viewModel.dateType = position
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -66,23 +63,28 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.OnDat
             }
 
             btnAddTransaction.setOnClickListener { navigateToTransaction() }
+
+            btnAll.setOnClickListener { viewModel.shownTransactionsType = null }
+            btnIncome.setOnClickListener { viewModel.shownTransactionsType = TransactionType.INCOME }
+            btnExpense.setOnClickListener { viewModel.shownTransactionsType = TransactionType.EXPENSE }
         }
     }
 
     private fun navigateToTransaction(transactionId: Long = -1) {
         findNavController()
-            .navigate(HomeFragmentDirections.actionHomeFragmentToAddTransactionFragment(transactionId))
+            .navigate(HomeFragmentDirections.actionHomeFragmentToAddTransactionFragment(
+                transactionId))
     }
 
     private fun showDateSelectionDialog() {
         DateSelectionDialog().apply {
             val years = this@HomeFragment.resources.getStringArray(R.array.years)
-            val (year, month, day) = homeViewModel.getYearMonthDay()
+            val (year, month, day) = viewModel.getYearMonthDay()
             arguments = bundleOf(
                 DateSelectionDialog.DAY_ARG to day,
                 DateSelectionDialog.MONTH_ARG to month,
                 DateSelectionDialog.YEAR_ARG to (year - years.first().toInt()),
-                DateSelectionDialog.DATE_TYPE_ARG to homeViewModel.dateType
+                DateSelectionDialog.DATE_TYPE_ARG to viewModel.dateType
             )
         }.show(childFragmentManager, null)
     }
@@ -90,17 +92,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.OnDat
     private fun observe() {
         launchAndRepeatWithViewLifecycle {
             launch {
-                homeViewModel.transactionFlow.collectResult(
+                viewModel.transactionFlow.collectResult(
                     onLoading = {},
                     onSuccess = { transactions -> onTransactionsReceived(transactions) },
                     onError = { errorMsg ->
-                        showError(requireView(), errorMsg) { homeViewModel.getTransactionsByDate() }
+                        showError(requireView(), errorMsg) { viewModel.setTransactionByType() }
                     }
                 )
             }
 
             launch {
-                homeViewModel.formattedDate.collect { date -> binding.btnDateSelection.text = date }
+                viewModel.formattedDate.collect { date -> binding.btnDateSelection.text = date }
             }
         }
     }
@@ -120,9 +122,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.OnDat
     }
 
     override fun onDateSelected(year: Int, month: Int, day: Int) {
-        homeViewModel.setCalendar(year, month, day)
-
-        homeViewModel.getTransactionsByDate()
+        viewModel.setCalendar(year, month, day)
     }
 
     override fun onDestroyDialog() {
