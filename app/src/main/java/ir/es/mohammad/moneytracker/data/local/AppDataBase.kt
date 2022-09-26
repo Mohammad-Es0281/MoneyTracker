@@ -2,6 +2,8 @@ package ir.es.mohammad.moneytracker.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import ir.es.mohammad.moneytracker.data.local.dao.CategoryDao
+import ir.es.mohammad.moneytracker.data.local.dao.TransactionDao
 
 import ir.es.mohammad.moneytracker.model.Category
 import ir.es.mohammad.moneytracker.model.Transaction

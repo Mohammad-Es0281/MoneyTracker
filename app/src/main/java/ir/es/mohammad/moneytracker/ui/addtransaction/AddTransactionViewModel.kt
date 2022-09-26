@@ -11,11 +11,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class AddTransactionViewModel @Inject constructor(private val repository: Repository) :
     ViewModel() {
+
     private val _addTransactionFlow: MutableStateFlow<Result<Unit>> =
         MutableStateFlow(Result.Loading())
     val addTransactionFlow = _addTransactionFlow.asStateFlow()
@@ -31,6 +33,10 @@ class AddTransactionViewModel @Inject constructor(private val repository: Reposi
     private val _transactionFlow: MutableStateFlow<Result<Transaction>> =
         MutableStateFlow(Result.Loading())
     val transactionFlow = _transactionFlow.asStateFlow()
+
+    init {
+        getCategories()
+    }
 
     fun addTransaction(transaction: Transaction) {
         viewModelScope.launch {

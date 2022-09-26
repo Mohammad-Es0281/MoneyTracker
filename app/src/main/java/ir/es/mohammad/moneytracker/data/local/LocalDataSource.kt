@@ -1,5 +1,7 @@
 package ir.es.mohammad.moneytracker.data.local
 
+import ir.es.mohammad.moneytracker.data.local.dao.CategoryDao
+import ir.es.mohammad.moneytracker.data.local.dao.TransactionDao
 import ir.es.mohammad.moneytracker.model.Category
 import ir.es.mohammad.moneytracker.model.Transaction
 import kotlinx.coroutines.flow.Flow
@@ -10,32 +12,28 @@ class LocalDataSource @Inject constructor(
     private val categoryDao: CategoryDao,
 ) : ILocalDataSource {
     override suspend fun insertTransaction(transaction: Transaction) {
-        return transactionDao.insertTransaction(transaction)
+        return transactionDao.insert(transaction)
     }
 
-    override suspend fun getAllTransactions(): Flow<List<Transaction>> {
-        return transactionDao.getAllTransactions()
+    override suspend fun editTransaction(transaction: Transaction) {
+        return transactionDao.update(transaction)
     }
+    override suspend fun getTransaction(id: Long): Transaction {
+        return transactionDao.get(id)
+    }
+
     override suspend fun getTransactionsByDate(
         startDate: Long,
         endDate: Long,
     ): Flow<List<Transaction>> {
-        return transactionDao.getTransactionsByDate(startDate, endDate)
-    }
-
-    override suspend fun getTransaction(id: Long): Transaction {
-        return transactionDao.getTransaction(id)
-    }
-
-    override suspend fun editTransaction(transaction: Transaction) {
-        return transactionDao.updateTransaction(transaction)
+        return transactionDao.getByDate(startDate, endDate)
     }
 
     override suspend fun getAllCategories(): List<Category> {
-        return categoryDao.getAllCategories()
+        return categoryDao.getAll()
     }
 
     override suspend fun insertCategory(category: Category) {
-        return categoryDao.insertCategory(category)
+        return categoryDao.insert(category)
     }
 }

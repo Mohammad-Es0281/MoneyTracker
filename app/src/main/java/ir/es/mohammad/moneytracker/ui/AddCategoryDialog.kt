@@ -15,7 +15,7 @@ class AddCategoryDialog : DialogFragment() {
     private lateinit var onCategoryAddedListener: OnCategoryAddedListener
 
     interface OnCategoryAddedListener {
-        fun onAddCategory(category: Category)
+        fun onCategoryAdded(category: Category)
     }
 
     override fun onAttach(context: Context) {
@@ -26,9 +26,7 @@ class AddCategoryDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = DialogAddCategoryBinding.inflate(LayoutInflater.from(context))
         initViews()
-        return MaterialAlertDialogBuilder(requireActivity())
-            .setView(binding.root)
-            .create()
+        return MaterialAlertDialogBuilder(requireActivity()).setView(binding.root).create()
     }
 
     private fun initViews() {
@@ -41,7 +39,7 @@ class AddCategoryDialog : DialogFragment() {
 
             btnOk.setOnClickListener {
                 val category = Category(txtInputCategoryName.text.toString())
-                onCategoryAddedListener.onAddCategory(category)
+                onCategoryAddedListener.onCategoryAdded(category)
                 dismiss()
             }
         }

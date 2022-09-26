@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import androidx.core.os.bundleOf
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import ir.es.mohammad.moneytracker.R
 import ir.es.mohammad.moneytracker.databinding.FragmentHomeBinding
+import ir.es.mohammad.moneytracker.model.DateType
 import ir.es.mohammad.moneytracker.model.Transaction
 import ir.es.mohammad.moneytracker.model.TransactionType
 import ir.es.mohammad.moneytracker.ui.*
@@ -44,18 +46,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
                 }
             }
 
-            spinnerDateType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    viewModel.dateType = position
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-            }
+            spinnerDateType.onItemSelectedListener = spinnerDateTypeListener
 
             btnDateSelection.setOnClickListener {
                 showDateSelectionDialog()
@@ -65,9 +56,27 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
             btnAddTransaction.setOnClickListener { navigateToTransaction() }
 
             btnAll.setOnClickListener { viewModel.shownTransactionsType = null }
-            btnIncome.setOnClickListener { viewModel.shownTransactionsType = TransactionType.INCOME }
-            btnExpense.setOnClickListener { viewModel.shownTransactionsType = TransactionType.EXPENSE }
+            btnIncome.setOnClickListener {
+                viewModel.shownTransactionsType = TransactionType.INCOME
+            }
+            btnExpense.setOnClickListener {
+                viewModel.shownTransactionsType = TransactionType.EXPENSE
+            }
         }
+    }
+
+    private val spinnerDateTypeListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(
+            parent: AdapterView<*>?,
+            view: View?,
+            position: Int,
+            id: Long,
+        ) {
+            viewModel.dateType =
+                DateType.valueOf(binding.spinnerDateType.getItemAtPosition(position).toString().uppercase())
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) = Unit
     }
 
     private fun navigateToTransaction(transactionId: Long = -1) {
@@ -84,7 +93,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
                 DateSelectionDialog.DAY_ARG to day,
                 DateSelectionDialog.MONTH_ARG to month,
                 DateSelectionDialog.YEAR_ARG to (year - years.first().toInt()),
-                DateSelectionDialog.DATE_TYPE_ARG to viewModel.dateType
+                DateSelectionDialog.DATE_TYPE_ARG to viewModel.dateType.ordinal
             )
         }.show(childFragmentManager, null)
     }

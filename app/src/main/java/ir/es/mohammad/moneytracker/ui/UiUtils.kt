@@ -1,6 +1,9 @@
 package ir.es.mohammad.moneytracker.ui
 
+import android.content.Context
 import android.view.View
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -11,6 +14,7 @@ import ir.es.mohammad.moneytracker.util.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 
 inline fun Fragment.launchAndRepeatWithViewLifecycle(
     minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
@@ -55,4 +59,12 @@ fun showError(view: View, errorMessage: String?, action: View.OnClickListener) {
     val message = errorMessage ?: context.getString(R.string.unknown_error)
     val actionMessage = context.getString(R.string.try_again)
     Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction(actionMessage, action).show()
+}
+
+private val sdf = SimpleDateFormat("yyyy/MM/dd")
+fun Long.toFormattedDate(): String = sdf.format(this)
+
+fun View.setBackgroundTint(appContext: Context, @ColorRes color: Int) {
+    val backgroundTintColor = ContextCompat.getColorStateList(appContext, color)
+    this.backgroundTintList = backgroundTintColor
 }

@@ -1,4 +1,4 @@
-package ir.es.mohammad.moneytracker.data.local
+package ir.es.mohammad.moneytracker.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CategoryDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCategory(category: Category)
+    @Insert()
+    suspend fun insert(category: Category)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert()
     suspend fun insertAll(category: List<Category>)
 
     @Query("SELECT * FROM ${Category.TABLE_NAME}")
-    suspend fun getAllCategories(): List<Category>
+    suspend fun getAll(): List<Category>
 }

@@ -14,10 +14,6 @@ class Repository @Inject constructor(private val localDataSource: ILocalDataSour
         return callDatabase { localDataSource.insertTransaction(transaction) }
     }
 
-    suspend fun getAllTransactions(): Flow<Result<List<Transaction>>> {
-        return callDatabaseFlow { localDataSource.getAllTransactions() }
-    }
-
     suspend fun getTransactionsByDate(
         startDate: Long,
         endDate: Long,

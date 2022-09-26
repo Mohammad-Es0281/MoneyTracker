@@ -11,12 +11,13 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ir.es.mohammad.moneytracker.R
 import ir.es.mohammad.moneytracker.data.local.*
+import ir.es.mohammad.moneytracker.data.local.dao.CategoryDao
+import ir.es.mohammad.moneytracker.data.local.dao.TransactionDao
 import ir.es.mohammad.moneytracker.model.Category
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Singleton
-
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -25,7 +26,7 @@ class DatabaseModule {
     @Singleton
     fun provideAppDatabase(@ApplicationContext appContext: Context): AppDataBase {
         lateinit var appDataBase: AppDataBase
-        val insertCategoriesCallback: RoomDatabase.Callback = object : RoomDatabase.Callback() {
+        val callbackInsertDefaultCategories = object : RoomDatabase.Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 CoroutineScope(Dispatchers.IO).launch {
                     appDataBase.categoriesDao().insertAll(getDefaultCategories(appContext))
@@ -36,7 +37,7 @@ class DatabaseModule {
             Room.databaseBuilder(appContext,
                 AppDataBase::class.java,
                 AppDataBase::class.java.simpleName)
-                .addCallback(insertCategoriesCallback)
+                .addCallback(callbackInsertDefaultCategories)
                 .build()
         return appDataBase
     }

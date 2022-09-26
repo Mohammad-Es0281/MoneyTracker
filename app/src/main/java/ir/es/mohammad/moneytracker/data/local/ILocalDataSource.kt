@@ -7,15 +7,13 @@ import kotlinx.coroutines.flow.Flow
 interface ILocalDataSource {
     suspend fun insertTransaction(transaction: Transaction)
 
-    suspend fun getAllTransactions(): Flow<List<Transaction>>
-
-    suspend fun getTransactionsByDate(startDate: Long, endDate: Long): Flow<List<Transaction>>
+    suspend fun editTransaction(transaction: Transaction)
 
     suspend fun getTransaction(id: Long): Transaction
 
-    suspend fun editTransaction(transaction: Transaction)
-
-    suspend fun getAllCategories(): List<Category>
+    suspend fun getTransactionsByDate(startDate: Long, endDate: Long): Flow<List<Transaction>>
 
     suspend fun insertCategory(category: Category)
+
+    suspend fun getAllCategories(): List<Category>
 }

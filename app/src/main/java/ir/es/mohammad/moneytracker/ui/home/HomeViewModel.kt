@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.es.mohammad.moneytracker.data.Repository
+import ir.es.mohammad.moneytracker.model.DateType
 import ir.es.mohammad.moneytracker.model.Transaction
 import ir.es.mohammad.moneytracker.model.TransactionType
 import ir.es.mohammad.moneytracker.util.Result
@@ -28,7 +29,7 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
             setFormattedDate()
         }
 
-    var dateType: Int = 0
+    var dateType: DateType = DateType.DAILY
         set(value) {
             field = value
             setFormattedDate()
@@ -76,21 +77,23 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
         viewModelScope.launch {
             if (!this@HomeViewModel::allTransactions.isInitialized)
                 collectTransactionFlow()
-            when (shownTransactionsType) {
-                null -> {
-                    _transactionFlow.emit(Result.Success(allTransactions))
-                    setIncomeTransactions()
-                    setExpenseTransactions()
-                }
-                TransactionType.INCOME -> {
-                    setIncomeTransactions()
-                    _transactionFlow.emit(Result.Success(incomeTransactions))
-                    setExpenseTransactions()
-                }
-                TransactionType.EXPENSE -> {
-                    setExpenseTransactions()
-                    _transactionFlow.emit(Result.Success(expenseTransactions))
-                    setIncomeTransactions()
+            else {
+                when (shownTransactionsType) {
+                    null -> {
+                        _transactionFlow.emit(Result.Success(allTransactions))
+                        setIncomeTransactions()
+                        setExpenseTransactions()
+                    }
+                    TransactionType.INCOME -> {
+                        setIncomeTransactions()
+                        _transactionFlow.emit(Result.Success(incomeTransactions))
+                        setExpenseTransactions()
+                    }
+                    TransactionType.EXPENSE -> {
+                        setExpenseTransactions()
+                        _transactionFlow.emit(Result.Success(expenseTransactions))
+                        setIncomeTransactions()
+                    }
                 }
             }
         }
@@ -120,17 +123,16 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
 
     private fun getStartAndEndDate(): Pair<Long, Long> {
         val newCalendar = calendar.clone() as Calendar
-        if (dateType >= 1) {
+        if (dateType >= DateType.MONTHLY) {
             newCalendar.set(Calendar.DAY_OF_MONTH, 1)
-            if (dateType == 2) newCalendar.set(Calendar.MONTH, 0)
+            if (dateType == DateType.YEARLY) newCalendar.set(Calendar.MONTH, 0)
         }
         val startDate = newCalendar.timeInMillis
 
         val fieldToIncrease = when (dateType) {
-            0 -> Calendar.DAY_OF_MONTH
-            1 -> Calendar.MONTH
-            2 -> Calendar.YEAR
-            else -> throw Exception()
+            DateType.DAILY -> Calendar.DAY_OF_MONTH
+            DateType.MONTHLY -> Calendar.MONTH
+            DateType.YEARLY -> Calendar.YEAR
         }
         newCalendar.add(fieldToIncrease, 1)
         val endDate = newCalendar.timeInMillis
@@ -143,10 +145,9 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
         val monthName = Month.of(month).getDisplayName(TextStyle.FULL, Locale.US)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
         return when (dateType) {
-            0 -> "$year, $monthName, $day"
-            1 -> "$year, $monthName"
-            2 -> "$year"
-            else -> throw Exception()
+            DateType.DAILY -> "$year, $monthName, $day"
+            DateType.MONTHLY -> "$year, $monthName"
+            DateType.YEARLY -> "$year"
         }
     }
 
