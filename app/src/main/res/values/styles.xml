@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ConstraintLayout.Child" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/background_rounded_white</item>
+        <item name="android:padding">@dimen/margin_small</item>
+    </style>
+
+    <style name="TextInputLayout.Custom" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusBottomStart">@dimen/corner_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/corner_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/corner_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/corner_radius</item>
+        <item name="hintTextColor">@color/secondary</item>
+    </style>
+
+    <style name="TextInputEditText.Custom" parent="">
+        <item name="backgroundTint">@color/prime_background</item>
+        <item name="backgroundTintMode">add</item>
+        <item name="drawableTint">@color/txt_icon</item>
+    </style>
+
+    <style name="Button.DialogPositiveButton" parent="ShapeAppearanceOverlay.Material3.Button">
+        <item name="android:textSize">@dimen/text_size_h4</item>
+        <item name="iconPadding">@dimen/margin_small</item>
+        <item name="rippleColor">@color/secondary</item>
+        <item name="strokeColor">@color/primary</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:textColor">@color/txt_icon</item>
+        <item name="backgroundTint">@color/prime_background</item>
+    </style>
+
+    <style name="Button.BackButton" parent="@style/Widget.Material3.Button.IconButton">
+        <item name="iconSize">24dp</item>
+        <item name="iconTint">@color/txt_icon</item>
+        <item name="android:layoutDirection">ltr</item>
+        <item name="android:padding">@dimen/margin_normal</item>
+    </style>
+
+    <style name="IconButton.Custom" parent="@style/Widget.Material3.Button.IconButton">
+        <item name="iconTint">@color/txt_icon</item>
+    </style>
+
+    <style name="Button.Large" parent="@style/Widget.Material3.ExtendedFloatingActionButton.Primary">
+        <item name="rippleColor">@color/secondary</item>
+        <item name="strokeColor">@color/primary</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="iconPadding">@dimen/margin_small</item>
+        <item name="iconTint">@color/txt_icon</item>
+        <item name="android:textColor">@color/txt_icon</item>
+        <item name="android:textSize">@dimen/text_size_h3</item>
+        <item name="backgroundTint">@color/prime_background</item>
+    </style>
+</resources>
