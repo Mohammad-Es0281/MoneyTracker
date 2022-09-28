@@ -3,13 +3,16 @@ package ir.es.mohammad.moneytracker.ui.home
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 import dagger.hilt.android.AndroidEntryPoint
 import ir.es.mohammad.moneytracker.R
 import ir.es.mohammad.moneytracker.databinding.FragmentHomeBinding
@@ -17,7 +20,9 @@ import ir.es.mohammad.moneytracker.model.DateType
 import ir.es.mohammad.moneytracker.model.Transaction
 import ir.es.mohammad.moneytracker.model.TransactionType
 import ir.es.mohammad.moneytracker.ui.*
+import ir.es.mohammad.moneytracker.ui.util.*
 import kotlinx.coroutines.launch
+import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateSelectionListener {
@@ -37,7 +42,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
     private fun initViews() {
         with(binding) {
             _transactionAdapter =
-                TransactionAdapter() { transaction -> navigateToTransaction(transaction.id) }
+                TransactionAdapter { transaction -> navigateToTransaction(transaction.id) }
             recyclerViewTransactions.apply {
                 adapter = transactionAdapter
                 layoutManager = object : LinearLayoutManager(requireContext()) {
@@ -97,7 +102,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
             id: Long,
         ) {
             viewModel.dateType =
-                DateType.valueOf(binding.spinnerDateType.getItemAtPosition(position).toString().uppercase())
+                DateType.valueOf(binding.spinnerDateType.getItemAtPosition(position).toString()
+                    .uppercase())
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -141,11 +147,41 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
     }
 
     private fun onTransactionsReceived(transactions: List<Transaction>) {
-        if (transactions.isNotEmpty())
-            binding.txtNoTransaction.gone()
-        else
-            binding.txtNoTransaction.visible()
         transactionAdapter.submitList(transactions)
+        if (transactions.isEmpty()) {
+            binding.txtNoTransaction.visible()
+            binding.constraintLayoutChart.gone()
+        } else {
+            binding.txtNoTransaction.gone()
+            binding.constraintLayoutChart.visible()
+
+            val values: ArrayList<PieEntry> = ArrayList()
+            val set = PieDataSet(values, "")
+            when (viewModel.shownTransactionsType) {
+                null -> {
+                    val incomesAmountSum = viewModel.getSumOfIncomeTransactions()
+                    val expenseAmountSum = viewModel.getSumOfExpenseTransactions()
+                    values.add(PieEntry(incomesAmountSum, resources.getString(R.string.income)))
+                    values.add(PieEntry(expenseAmountSum, resources.getString(R.string.expense)))
+                    set.colors = listOf(
+                        ContextCompat.getColor(requireContext(), R.color.second_green),
+                        ContextCompat.getColor(requireContext(), R.color.second_red))
+                }
+                TransactionType.INCOME, TransactionType.EXPENSE -> {
+                    val groupedTransactionByCategory =
+                        viewModel.groupTransactionsByCategory(viewModel.shownTransactionsType!!)
+                    groupedTransactionByCategory.forEach { (category, sumOfAmounts) ->
+                        values.add(PieEntry(sumOfAmounts, category.name))
+                    }
+                    set.colors = viewModel.randomColor.getColors(groupedTransactionByCategory.size)
+                }
+            }
+
+            val data = PieData(set)
+            data.setValueTextSize(12f)
+            binding.chart.data = data
+            binding.chart.invalidate()
+        }
     }
 
     override fun onDestroyView() {
