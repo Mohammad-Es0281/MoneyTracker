@@ -72,6 +72,10 @@ dependencies {
     def chart_version = "v3.1.0"
     implementation "com.github.PhilJay:MPAndroidChart:$chart_version"
 
+    def appCenterSdkVersion = '4.3.1'
+    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+
     def lottie_version = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottie_version"
 }
