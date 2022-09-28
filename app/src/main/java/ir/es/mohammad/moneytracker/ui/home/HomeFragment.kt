@@ -85,7 +85,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
             val appContext = requireActivity().applicationContext
             when (checkedId) {
                 R.id.btnIncome -> {
-                    val color = if (isChecked) R.color.first_green else R.color.transparent
+                    val color = if (isChecked) R.color.income_background else R.color.transparent
                     btnIncome.setBackgroundTint(appContext, color)
                 }
                 R.id.btnAll -> {
@@ -93,7 +93,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
                     btnAll.setBackgroundTint(appContext, color)
                 }
                 R.id.btnExpense -> {
-                    val color = if (isChecked) R.color.first_red else R.color.transparent
+                    val color = if (isChecked) R.color.expense_background else R.color.transparent
                     btnExpense.setBackgroundTint(appContext, color)
                 }
             }
@@ -180,8 +180,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
                     values.add(PieEntry(incomesAmountSum, resources.getString(R.string.income)))
                     values.add(PieEntry(expenseAmountSum, resources.getString(R.string.expense)))
                     set.colors = listOf(
-                        ContextCompat.getColor(requireContext(), R.color.second_green),
-                        ContextCompat.getColor(requireContext(), R.color.second_red))
+                        ContextCompat.getColor(requireContext(), R.color.income_foreground),
+                        ContextCompat.getColor(requireContext(), R.color.expense_foreground))
                 }
                 TransactionType.INCOME, TransactionType.EXPENSE -> {
                     val groupedTransactionByCategory =

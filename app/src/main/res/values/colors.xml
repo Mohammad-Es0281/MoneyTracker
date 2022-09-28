@@ -7,9 +7,9 @@
     <color name="secondary">#607D8B</color>
     <color name="txt_icon">#455E64</color>
 
-    <color name="first_green">#E680F87D</color>
-    <color name="second_green">#4FD54B</color>
-    <color name="first_red">#F7A1A1</color>
-    <color name="second_red">#DD6A6A</color>
+    <color name="income_background">#E680F87D</color>
+    <color name="income_foreground">#4FD54B</color>
+    <color name="expense_background">#F7A1A1</color>
+    <color name="expense_foreground">#DD6A6A</color>
     <color name="transparent">#00FFFFFF</color>
 </resources>

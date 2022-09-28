@@ -75,7 +75,7 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
             btnBack.setOnClickListener { requireActivity().onBackPressed() }
 
             groupBtnTransactionType.check(R.id.btnIncome)
-            btnIncome.setBackgroundTint(requireContext().applicationContext, R.color.first_green)
+            btnIncome.setBackgroundTint(requireContext().applicationContext, R.color.income_background)
             groupBtnTransactionType.addOnButtonCheckedListener { _, checkedId, isChecked ->
                 changeTransactionTypeBackground(checkedId, isChecked)
             }
@@ -118,11 +118,11 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
             val appContext = requireActivity().applicationContext
             when (checkedId) {
                 R.id.btnIncome -> {
-                    val color = if (isChecked) R.color.first_green else R.color.transparent
+                    val color = if (isChecked) R.color.income_background else R.color.transparent
                     btnIncome.setBackgroundTint(appContext, color)
                 }
                 R.id.btnExpense -> {
-                    val color = if (isChecked) R.color.first_red else R.color.transparent
+                    val color = if (isChecked) R.color.expense_background else R.color.transparent
                     btnExpense.setBackgroundTint(appContext, color)
                 }
             }
