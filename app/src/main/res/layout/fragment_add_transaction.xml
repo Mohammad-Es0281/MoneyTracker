@@ -4,22 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_grey_50"
+    android:background="@color/prime_background"
     tools:context=".ui.addtransaction.AddTransactionFragment">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnBack"
-        style="@style/Widget.Material3.Button.IconButton"
+        style="@style/Button.BackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
         android:layout_marginTop="@dimen/margin_small"
         android:contentDescription="@string/back_button"
-        android:layoutDirection="ltr"
-        android:padding="@dimen/margin_normal"
         app:icon="@drawable/ic_arrow_back"
-        app:iconSize="24dp"
-        app:iconTint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_very_small"
         android:text="@string/new_transaction"
+        android:textColor="@color/txt_icon"
         android:textSize="@dimen/text_size_h1"
         app:layout_constraintBottom_toBottomOf="@+id/btnBack"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,11 +45,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/ConstraintLayout.Child"
             android:layout_marginHorizontal="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_small"
-            android:background="@drawable/background_rounded_white"
             android:padding="@dimen/margin_normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -88,29 +83,22 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayoutAmount"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/TextInputLayout.Custom"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_very_large"
                 android:hint="@string/amount"
-                app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
-                app:boxCornerRadiusBottomStart="@dimen/corner_radius"
-                app:boxCornerRadiusTopEnd="@dimen/corner_radius"
-                app:boxCornerRadiusTopStart="@dimen/corner_radius"
-                app:hintTextColor="@color/blue_grey_500"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/groupBtnTransactionType">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtInputAmount"
+                    style="@style/TextInputEditText.Custom"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/blue_grey_50"
-                    android:backgroundTintMode="add"
                     android:drawableEnd="@drawable/round_dollar_sign"
-                    android:drawableTint="@color/blue_grey_700"
                     android:inputType="number"
                     android:maxLength="15"
                     tools:targetApi="m" />
@@ -118,29 +106,22 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayoutDate"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/TextInputLayout.Custom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_very_large"
                 android:hint="@string/date"
-                app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
-                app:boxCornerRadiusBottomStart="@dimen/corner_radius"
-                app:boxCornerRadiusTopEnd="@dimen/corner_radius"
-                app:boxCornerRadiusTopStart="@dimen/corner_radius"
-                app:hintTextColor="@color/blue_grey_500"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAmount">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtInputDate"
+                    style="@style/TextInputEditText.Custom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/blue_grey_50"
-                    android:backgroundTintMode="add"
                     android:drawableEnd="@drawable/ic_calendar"
-                    android:drawableTint="@color/blue_grey_700"
                     android:focusable="false"
                     android:inputType="date"
                     tools:targetApi="m" />
@@ -148,30 +129,22 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayoutNote"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/TextInputLayout.Custom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_very_large"
                 android:hint="@string/note"
-                app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
-                app:boxCornerRadiusBottomStart="@dimen/corner_radius"
-                app:boxCornerRadiusTopEnd="@dimen/corner_radius"
-                app:boxCornerRadiusTopStart="@dimen/corner_radius"
-                app:hintTextColor="@color/blue_grey_500"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerCategory">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtInputNote"
+                    style="@style/TextInputEditText.Custom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/blue_grey_50"
-                    android:backgroundTintMode="add"
                     android:drawableEnd="@drawable/ic_note"
-                    android:drawablePadding="@dimen/margin_very_small"
-                    android:drawableTint="@color/blue_grey_700"
                     android:maxLength="150"
                     tools:targetApi="m" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -192,22 +165,15 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAdd"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Primary"
+        style="@style/Button.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="@dimen/margin_very_large"
-        android:backgroundTint="@color/blue_grey_50"
+        android:layout_marginBottom="@dimen/margin_large"
         android:enabled="false"
         android:text="@string/save"
-        android:textColor="@color/blue_grey_100"
-        android:textSize="@dimen/text_size_h3"
-        app:iconPadding="@dimen/margin_small"
+        android:textColor="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:rippleColor="@color/blue_grey_500"
-        app:strokeColor="@color/blue_grey_100"
-        app:strokeWidth="1dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

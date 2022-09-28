@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="prime_background">#51626e</color>
+    <color name="primary">#485b63</color>
+    <color name="status_bar">#36434a</color>
+    <color name="secondary">#aebfc7</color>
+    <color name="txt_icon">#ECEFF1</color>
+
+    <color name="second_background">#E23B4449</color>
+    <color name="first_green">#3FBA3B</color>
+    <color name="first_red">#BA3B3B</color>
+    <color name="second_green">#4FD54B</color>
+    <color name="second_red">#DD6A6A</color>
+    <color name="transparent">#00FFFFFF</color>
+</resources>

@@ -105,6 +105,7 @@
     <string name="category">Category</string>
     <string name="add_a_category">Add a category</string>
     <string name="note">Note</string>
+    <string name="chart">Chart</string>
 
     <string-array name="date_type">
         <item>@string/daily</item>

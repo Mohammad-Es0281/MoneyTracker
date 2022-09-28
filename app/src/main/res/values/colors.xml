@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue_grey_50">#ECEFF1</color>
-    <color name="blue_grey_100">#CFD8DC</color>
-    <color name="blue_grey_300">#90A4AE</color>
-    <color name="blue_grey_500">#607D8B</color>
-    <color name="blue_grey_700">#455A64</color>
+    <color name="prime_background">#ECEFF1</color>
+    <color name="second_background">#FFFFFFFF</color>
+    <color name="primary">#CFD8DC</color>
+    <color name="status_bar">#90A4AE</color>
+    <color name="secondary">#607D8B</color>
+    <color name="txt_icon">#455E64</color>
 
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="light_green">#A3F7A1</color>
-    <color name="light_red">#F7A1A1</color>
-    <color name="green">#3FBA3B</color>
-    <color name="red">#BA3B3B</color>
+    <color name="first_green">#E680F87D</color>
+    <color name="second_green">#4FD54B</color>
+    <color name="first_red">#F7A1A1</color>
+    <color name="second_red">#DD6A6A</color>
     <color name="transparent">#00FFFFFF</color>
-    <color name="background">#99ECEFF1</color>
 </resources>

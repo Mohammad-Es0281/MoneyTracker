@@ -20,9 +20,8 @@ import ir.es.mohammad.moneytracker.model.DateType
 import ir.es.mohammad.moneytracker.model.Transaction
 import ir.es.mohammad.moneytracker.model.TransactionType
 import ir.es.mohammad.moneytracker.ui.*
-import ir.es.mohammad.moneytracker.ui.util.*
+import ir.es.mohammad.moneytracker.ui.util.viewBinding
 import kotlinx.coroutines.launch
-import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateSelectionListener {
@@ -60,7 +59,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
             btnAddTransaction.setOnClickListener { navigateToTransaction() }
 
             groupBtnTransactionType.check(R.id.btnAll)
-            btnAll.setBackgroundTint(requireContext().applicationContext, R.color.blue_grey_100)
+            btnAll.setBackgroundTint(requireContext().applicationContext, R.color.primary)
             groupBtnTransactionType.addOnButtonCheckedListener { _, checkedId, isChecked ->
                 changeTransactionTypeBackground(checkedId, isChecked)
             }
@@ -71,6 +70,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
             btnExpense.setOnClickListener {
                 viewModel.shownTransactionsType = TransactionType.EXPENSE
             }
+
+            chart.isDrawHoleEnabled = true
+            chart.setHoleColor(ContextCompat.getColor(requireContext(), R.color.second_background))
+            chart.setEntryLabelTextSize(10f)
+            chart.setEntryLabelColor(ContextCompat.getColor(requireContext(), R.color.txt_icon))
+            chart.description.isEnabled = false
+            chart.legend.textColor = ContextCompat.getColor(requireContext(), R.color.txt_icon)
         }
     }
 
@@ -79,15 +85,15 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
             val appContext = requireActivity().applicationContext
             when (checkedId) {
                 R.id.btnIncome -> {
-                    val color = if (isChecked) R.color.light_green else R.color.transparent
+                    val color = if (isChecked) R.color.first_green else R.color.transparent
                     btnIncome.setBackgroundTint(appContext, color)
                 }
                 R.id.btnAll -> {
-                    val color = if (isChecked) R.color.blue_grey_100 else R.color.transparent
+                    val color = if (isChecked) R.color.primary else R.color.transparent
                     btnAll.setBackgroundTint(appContext, color)
                 }
                 R.id.btnExpense -> {
-                    val color = if (isChecked) R.color.light_red else R.color.transparent
+                    val color = if (isChecked) R.color.first_red else R.color.transparent
                     btnExpense.setBackgroundTint(appContext, color)
                 }
             }

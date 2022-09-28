@@ -1,4 +1,4 @@
-package ir.es.mohammad.moneytracker.ui
+package ir.es.mohammad.moneytracker.ui.home
 
 import android.app.Dialog
 import android.content.Context
@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ir.es.mohammad.moneytracker.databinding.DialogSelectDateBinding
 import ir.es.mohammad.moneytracker.model.DateType
+import ir.es.mohammad.moneytracker.ui.gone
 
 class DateSelectionDialog : DialogFragment() {
 
@@ -51,7 +52,6 @@ class DateSelectionDialog : DialogFragment() {
     private fun initViews() {
         with(binding) {
             btnDismiss.setOnClickListener { dismiss() }
-
 
             spinnerDays.setSelection(initDay - 1)
             spinnerMonths.setSelection(initMonth - 1)

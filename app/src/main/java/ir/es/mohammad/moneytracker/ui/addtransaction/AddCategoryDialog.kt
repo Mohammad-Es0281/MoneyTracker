@@ -1,3 +1,5 @@
+package ir.es.mohammad.moneytracker.ui.addtransaction
+
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle

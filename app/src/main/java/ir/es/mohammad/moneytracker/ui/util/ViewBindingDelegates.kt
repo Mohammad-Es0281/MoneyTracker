@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ir.es.mohammad.moneytracker.ui
+package ir.es.mohammad.moneytracker.ui.util
 
 import android.view.View
 import androidx.fragment.app.Fragment

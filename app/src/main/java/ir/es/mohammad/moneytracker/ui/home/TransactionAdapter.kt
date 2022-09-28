@@ -11,8 +11,6 @@ import ir.es.mohammad.moneytracker.databinding.ItemTransactionBinding
 import ir.es.mohammad.moneytracker.model.Transaction
 import ir.es.mohammad.moneytracker.model.TransactionType
 import ir.es.mohammad.moneytracker.ui.toFormattedDate
-import java.text.SimpleDateFormat
-import java.util.*
 
 class TransactionAdapter(
     private val onTransactionSelected: (transaction: Transaction) -> Unit
@@ -26,7 +24,7 @@ class TransactionAdapter(
                 root.setOnClickListener { onTransactionSelected(transaction) }
                 val isIncome = transaction.transactionType == TransactionType.INCOME
                 val prefix = if (isIncome) "+ " else "- "
-                val textColor = if (isIncome) R.color.green else R.color.red
+                val textColor = if (isIncome) R.color.second_green else R.color.second_red
                 txtAmount.text = prefix + transaction.amount.toString()
                 txtAmount.setTextColor(ContextCompat.getColor(itemViewBinding.root.context, textColor))
                 txtDate.text = transaction.date.toFormattedDate()

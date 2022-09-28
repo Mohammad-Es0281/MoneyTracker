@@ -7,6 +7,7 @@ import ir.es.mohammad.moneytracker.data.Repository
 import ir.es.mohammad.moneytracker.model.DateType
 import ir.es.mohammad.moneytracker.model.Transaction
 import ir.es.mohammad.moneytracker.model.TransactionType
+import ir.es.mohammad.moneytracker.ui.util.RandomColors
 import ir.es.mohammad.moneytracker.util.Result
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,6 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
+
+    val randomColor = RandomColors()
 
     private var calendar: Calendar = Calendar.getInstance().apply {
         set(Calendar.HOUR_OF_DAY, 0)
@@ -156,4 +159,24 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
             _formattedDate.emit(getFormattedDate())
         }
     }
+
+    fun getSumOfIncomeTransactions() =
+        incomeTransactions.sumOf { transaction -> transaction.amount }.toFloat()
+
+    fun getSumOfExpenseTransactions() =
+        expenseTransactions.sumOf { transaction -> transaction.amount }.toFloat()
+
+    fun groupTransactionsByCategory(transactionType: TransactionType) =
+        if (transactionType == TransactionType.INCOME)
+            incomeTransactions.groupBy { transaction -> transaction.category }
+                .map { transactionByCategory ->
+                    transactionByCategory.key to transactionByCategory.value.sumOf { transaction -> transaction.amount }
+                        .toFloat()
+                }
+        else
+            expenseTransactions.groupBy { transaction -> transaction.category }
+                .map { transactionByCategory ->
+                    transactionByCategory.key to transactionByCategory.value.sumOf { transaction -> transaction.amount }
+                        .toFloat()
+                }
 }

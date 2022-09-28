@@ -196,22 +196,15 @@
 
     <Button
         android:id="@+id/btnAddTransaction"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Primary"
+        style="@style/Button.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/margin_large"
-        android:backgroundTint="@color/prime_background"
         android:text="@string/transaction"
-        android:textColor="@color/txt_icon"
-        android:textSize="@dimen/text_size_h3"
         app:icon="@drawable/ic_round_add"
-        app:iconPadding="@dimen/margin_small"
-        app:iconTint="@color/txt_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/secondary"
-        app:strokeColor="@color/primary"
-        app:strokeWidth="1dp" />
+/>
 </androidx.constraintlayout.widget.ConstraintLayout>
