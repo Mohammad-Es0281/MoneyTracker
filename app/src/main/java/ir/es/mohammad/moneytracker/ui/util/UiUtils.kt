@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.snackbar.Snackbar
 import ir.es.mohammad.moneytracker.R
 import ir.es.mohammad.moneytracker.util.Result
@@ -67,4 +68,14 @@ fun Long.toFormattedDate(): String = sdf.format(this)
 fun View.setBackgroundTint(appContext: Context, @ColorRes color: Int) {
     val backgroundTintColor = ContextCompat.getColorStateList(appContext, color)
     this.backgroundTintList = backgroundTintColor
+}
+
+fun startLoading(loading: LottieAnimationView) {
+    loading.visible()
+    loading.playAnimation()
+}
+
+fun stopLoading(loading: LottieAnimationView) {
+    loading.gone()
+    loading.pauseAnimation()
 }

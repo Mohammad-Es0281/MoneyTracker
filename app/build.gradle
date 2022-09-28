@@ -71,4 +71,7 @@ dependencies {
 
     def chart_version = "v3.1.0"
     implementation "com.github.PhilJay:MPAndroidChart:$chart_version"
+
+    def lottie_version = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottie_version"
 }

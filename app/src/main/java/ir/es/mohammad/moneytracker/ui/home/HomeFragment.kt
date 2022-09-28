@@ -138,9 +138,15 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
         launchAndRepeatWithViewLifecycle {
             launch {
                 viewModel.transactionFlow.collectResult(
-                    onLoading = {},
-                    onSuccess = { transactions -> onTransactionsReceived(transactions) },
+                    onLoading = {
+                        startLoading(binding.loadingTransaction)
+                    },
+                    onSuccess = { transactions ->
+                        stopLoading(binding.loadingTransaction)
+                        onTransactionsReceived(transactions)
+                    },
                     onError = { errorMsg ->
+                        stopLoading(binding.loadingTransaction)
                         showError(requireView(), errorMsg) { viewModel.setTransactionByType() }
                     }
                 )
@@ -155,10 +161,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), DateSelectionDialog.DateS
     private fun onTransactionsReceived(transactions: List<Transaction>) {
         transactionAdapter.submitList(transactions)
         if (transactions.isEmpty()) {
+            binding.recyclerViewTransactions.gone()
             binding.txtNoTransaction.visible()
+            binding.imgNotFound.visible()
             binding.constraintLayoutChart.gone()
         } else {
+            binding.recyclerViewTransactions.visible()
             binding.txtNoTransaction.gone()
+            binding.imgNotFound.gone()
             binding.constraintLayoutChart.visible()
 
             val values: ArrayList<PieEntry> = ArrayList()

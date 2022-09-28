@@ -87,7 +87,7 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
             txtInputDate.setText(calendar.timeInMillis.toFormattedDate())
             txtInputDate.setOnClickListener { showDatePickerDialog() }
 
-            btnAdd.setOnClickListener {
+            btnSave.setOnClickListener {
                 val transaction = makeTransaction()
                 if (args.transactionId == -1L) viewModel.addTransaction(transaction)
                 else viewModel.editTransaction(transaction)
@@ -134,10 +134,10 @@ class AddTransactionFragment : Fragment(R.layout.fragment_add_transaction),
             val isBlank = editable?.isBlank() ?: true
             if (isBlank) txtInputAmount.error = getString(R.string.amount_warning)
 
-            btnAdd.isEnabled = !isBlank
-            val textColorId = if (btnAdd.isEnabled) R.color.txt_icon else R.color.primary
+            btnSave.isEnabled = !isBlank
+            val textColorId = if (btnSave.isEnabled) R.color.txt_icon else R.color.primary
             val textColor = ContextCompat.getColor(requireContext(), textColorId)
-            btnAdd.setTextColor(textColor)
+            btnSave.setTextColor(textColor)
         }
     }
 

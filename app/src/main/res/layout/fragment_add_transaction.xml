@@ -38,7 +38,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/margin_very_small"
         android:layout_marginBottom="@dimen/margin_normal"
-        app:layout_constraintBottom_toTopOf="@+id/btnAdd"
+        app:layout_constraintBottom_toTopOf="@+id/btnSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnBack">
@@ -164,7 +164,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnAdd"
+        android:id="@+id/btnSave"
         style="@style/Button.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
